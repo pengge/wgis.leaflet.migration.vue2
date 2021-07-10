@@ -1,0 +1,8 @@
+发布：
+npm run build
+
+开发：
+npm run start
+
+主要：
+扫尾改成1了 \src\Spark.js   tailPointsCount =1  原来大概是10
