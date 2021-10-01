@@ -11,7 +11,8 @@ function initData() {
       from: [center.lng + lngOffset, center.lat + latOffset],
       to: [center.lng + latOffset, center.lat],
       labels: [`from-${idx}`, 'to'],
-      value: 10 + 10 * (idx % 10) * Math.random()
+      value: 10 + 10 * (idx % 10) * Math.random(),
+      unikey:Math.random()
     };
   });
 }

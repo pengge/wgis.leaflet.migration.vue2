@@ -10,14 +10,18 @@ var data = [
   "from": [116.404844, 39.91405],
   "to": [84.9023, 42.148],
   "labels": ["北京", "新疆"],
-  "value": 8
+  "lineovertext": ["我是第一行","我是第二行","我是第三行"],
+  "value": 8,
+  "unikey": 1
   },
   {
     "color": "rgb(101, 169, 249)",
     "from": [84.9023, 42.148],
     "to": [87.8695, 31.6846],
     "labels": ["新疆", "西藏"],
-    "value": 8
+    "lineovertext":  ["我是第一行","我是第二行"],
+    "value": 8,
+    "unikey": 2
     }
 // }, {
 //   "color": "rgb(101, 169, 249)",
@@ -215,9 +219,14 @@ var popover = document.querySelector('.popover');
 var options = {
   minRadius: 3,
   maxRadius: 3,
-  arcWidth: 1,
+  arcWidth: 5,
   label: true,
-  order: false,
+  order: false, 
+  enableMouseOverStatus:true,
+  enableClickStatus:false,
+  onLineClick: function (unikey) {
+    console.log('onLineClickr',unikey);
+  },
   replacePopover: function (x, y, data, index) {
     console.log(x, y, data, index, 'show popover');
     popover.innerHTML = 'value:' + data.value + '\nfrom:' + data.labels[1] + '\nto:' + data.labels[0]

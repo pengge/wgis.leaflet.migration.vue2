@@ -16,7 +16,7 @@ class Migration {
   // options = { map, canvas, data, options, container }
   constructor({ options, container, ...otherOptions }) {
     const {
-      replacePopover, onShowPopover, onHidePopover, direction, order, ...style
+      replacePopover, onShowPopover, onHidePopover, direction, order,onLineClick,enableMouseOverStatus,enableClickStatus,mapParentFrame, ...style
     } = options;
     Object.assign(this, {
       ...otherOptions,
@@ -30,12 +30,63 @@ class Migration {
         arcs: [],
         pulses: [],
         sparks: []
-      }
+      },
+      mouse:{
+        //点击的鼠标点情况
+        cl_mouse:{
+          x:-1,
+          y:-1
+        }, 
+        //点击的鼠标点情况
+        mov_mouse:{
+          x:-1,
+          y:-1
+        }, 
+        enableMouseOverStatus,
+        enableClickStatus
+      },
+      mapParentFrame,
+     
+      onLineClick,
     });
+     
     this.popover = new Popover({
       replacePopover, onShowPopover, onHidePopover, container
     });
     this.context = this.canvas.getContext('2d');
+    //加入事件 
+    let that = this;
+    if(this.mouse.enableMouseOverStatus == true ){
+      this.canvas.addEventListener('mousemove', function(event) {//mousemove
+       
+        //标准的获取鼠标点击相对于canvas画布的坐标公式  
+        var x = event.clientX - that.canvas.getBoundingClientRect().left;
+        var y = event.clientY - that.canvas.getBoundingClientRect().top;
+        that.mouse.mov_mouse.x = x;
+        that.mouse.mov_mouse.y = y; 
+    
+      }, false); 
+    }
+    
+    if(this.mouse.enableClickStatus == true){
+        this.canvas.addEventListener('click', function(event) {//onclick
+       
+        //标准的获取鼠标点击相对于canvas画布的坐标公式 
+        //console.log('当前鼠标点击位置',event.clientX,event.clientY); 
+        var x = event.clientX - that.canvas.getBoundingClientRect().left;
+        var y = event.clientY - that.canvas.getBoundingClientRect().top;
+        that.mouse.cl_mouse.x = x;
+        that.mouse.cl_mouse.y = y;  
+        }, false);
+    }
+
+  
+   
+      
+  }
+
+  _onclick(e) {
+     console.log(e)
   }
 
   setStyle(style) {
@@ -66,17 +117,20 @@ class Migration {
       }
     } = this;
     const radiusScale = linearScale(dataRange, [minRadius, maxRadius || 2 * minRadius]);
+    let mouse = this.mouse;
+    let onLineClick = this.onLineClick;
+    let mapParentFrame = this.mapParentFrame;
     data.forEach((item, index) => {
-      // console.log('item',item);
+       //console.log('item',item);
       const {
-        from, to, labels, color
-      } = item;
+        from, to, labels, color,unikey,lineovertext
+      } = item; 
       const arc = new Line({
         startX: from[0],
         startY: from[1],
         endX: to[0],
         endY: to[1],
-        labels, label, width: arcWidth, color
+        labels, label, width: arcWidth, color,mouse,onLineClick,unikey,mapParentFrame,lineovertext
       });
       // const zoom = this.map.getZoom();
       const radius = radiusScale(item.value);
@@ -162,7 +216,7 @@ class Migration {
                   this.index = 0;
                 }
               }
-            } else {
+            } else { 
               shapes.forEach(shap => shap.draw(context));
             }
           });
