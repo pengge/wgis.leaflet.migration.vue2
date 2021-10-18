@@ -49,7 +49,7 @@ if (env === 'development') {
 
 if (env === 'production' || process.env.ANALYZE) {
   webpackConfig.optimization = {
-    minimizer: [new UglifyJsPlugin()],
+     minimizer: [new UglifyJsPlugin()],
   };
 }
 

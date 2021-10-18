@@ -1,6 +1,6 @@
 {
   "name": "wgis.leaflet.migration.vue2",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "description": "",
   "main": "dist/index.js",
   "scripts": {

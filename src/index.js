@@ -1,9 +1,12 @@
+ 
 import Migration from './Migration';
 import { MIN_ZOOM } from './config';
 import store from './store';
-
+console.log("飞线图准备加L载",Migration);
+console.log("当前L",L);
 L.MigrationLayer = L.Layer.extend({
   initialize(_data = [], options) {
+    console.log("MigrationLayerinit");
     Object.assign(this, {
       _data,
       options
@@ -12,6 +15,7 @@ L.MigrationLayer = L.Layer.extend({
     this.mapHandles = [];
   },
   onAdd(map) {
+    console.log("MigrationLayerinit onAdd");
     this._map = map;
     this._init();
     this._bindMapEvents();
@@ -153,6 +157,7 @@ L.MigrationLayer = L.Layer.extend({
     L.DomUtil.setPosition(this.container, posi);
   },
 });
-L.migrationLayer = function (data, options) {
+L.migrationLayer = function (data, options) { 
+  console.log("L.migrationLayer");
   return new L.MigrationLayer(data, options);
 };

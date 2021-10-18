@@ -37,7 +37,11 @@ class Line extends Arc {
       if(context.isPointInStroke(this.mouse.mov_mouse.x,this.mouse.mov_mouse.y)){
         if (this.label) {
           const [startLabel, endLabel] = this.labels;
+         
           Object.assign(context, { font: this.font });
+          console.log("font",context.font) //14px sans-serif
+          console.log("fillStyle",context.fillStyle) //#000000
+          context.font = "14px sans-serif"
           if (this.lineovertext) {
               for(let i = 0 ;i<this.lineovertext.length ; i++){
                 const x =  15; //this.startX 
